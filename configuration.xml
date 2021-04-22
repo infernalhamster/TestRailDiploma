@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<component owner="Bercut" system="SDEP" subsystem="AutoTest" name="AutotestWebMashup" mainstream="1.0">
+  <version current="1.0.0">
+    <responsibility>
+      <manager>
+        <full-name>Смирнов Николай</full-name>
+      </manager>
+    </responsibility>
+    <build type="java" filename="autotestwebmashup" ext="war">
+      <uses>
+        <!--component name="AOI_Correlation_Manager" mainstream="3.1" use-as="wsdl" /-->
+        <component name="ATLAS API Interface" mainstream="1.4" />
+        <component name="ATLAS OM Interface" mainstream="1.4" />
+        <component name="Tomcat servlet-api" mainstream="7.0" />
+        <component name="SAClientLib" mainstream="3.1" />
+        <component name="RTSIB Runtime" mainstream="3.1" />
+      </uses>
+      <sources encoding="UTF-8">
+        <war filename="autotestwebmashup" webxml="web\WEB-INF\web.xml">
+          <resource name="ATLAS/*.xml" />
+          <resource name="web\WEB-INF\wsdl\*.xsd" />
+          <resource name="web\WEB-INF\wsdl\*.wsdl" />
+          <resource name="web\WEB-INF\*.xml" />
+          <resource name="*.ld" />
+          <resource name="*.xml" />
+          <source name="java/**/*.java" />
+        </war>
+      </sources>
+      <!--wsdl-codegen>
+        <rtsib-wsdlgen name="AOI_Correlation_Manager" mainstream="3.1" version="3.1" server="yes" asynch="no" noextract="yes" todir="java" />
+      </wsdl-codegen>
+      <atlas name="SARTAudit_v3.atlas.xml" package="com.bercut.audit.sa.logging" method_prefix="log" alarms_class_name="$eAlarms" traces_class_name="$eTraces" /-->
+      <platform name="Java">
+        <build-project compiler="JDK 17">
+          <project-path />
+        </build-project>
+      </platform>
+    </build>
+  </version>
+  <descriptor version="1.3" />
+  <description>Мешанина чего-то для автотестирования в платформе. Web приложение.</description>
+</component>
+

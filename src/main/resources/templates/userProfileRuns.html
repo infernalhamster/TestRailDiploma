@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot Thymeleaf - Bootstrap WebJars</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css} "/>
+    <!-- Bootstrap 4.5 CSS-->
+    <link type="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link th:rel="stylesheet" th:href="@{/webjars/datatables/1.10.24/css/dataTables.bootstrap4.min.css}"/>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">TestRail</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="${'/'}">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="${'/user'}">Users List<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <!--Information about user-->
+    <div class="row">
+        <div class="col-3">
+            <h2 class="h2">ID:</h2>
+        </div>
+        <div>
+            <label class="h2 border border-primary rounded pl-3 pr-3" th:text="${user.id}"></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <h2 class="h2">User Name:</h2>
+        </div>
+        <div>
+            <h2 class="h2 border border-primary rounded pl-3 pr-3" th:text="${user.name}"></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <h2 class="h2">E-mail:</h2>
+        </div>
+        <div>
+            <h2 class="h2 border border-primary rounded pl-3 pr-3" th:text="${user.email}"></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <h2 class="h2">Is Active</h2>
+        </div>
+        <div>
+            <h2 class="h2 border border-primary rounded pl-3 pr-3" th:text="${user.isActive}"></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <h2 class="h2">Role</h2>
+        </div>
+        <div>
+            <h2 class="h2 border border-primary rounded pl-3 pr-3" th:text="${user.role}"></h2>
+        </div>
+    </div>
+    <hr class="border-primary"/>
+
+    <!-- His test Map<Project, Map<Plan, List<TestRun>>>-->
+
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne">
+                        Таблица со всеми тестами
+                    </button>
+                </h5>
+            </div>
+            <!--<p id="date_filter">
+                <span id="date-label-from" class="date-label">From: </span><input class="date" type="date" id="datepicker_from" />
+                <span id="date-label-to" class="date-label">To:</span><input class="date" type="date" id="datepicker_to" />
+            </p>-->
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <table id="example" class="table table-bordered table-hover dt-responsive nowrap">
+                        <thead>
+                        <tr>
+                            <th>Project name</th>
+                            <th>Plan name</th>
+                            <th>Test name</th>
+                            <th>Data created</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:each="your : ${yourMap.entrySet()}" th:if="${!your.getValue().entrySet().isEmpty()}">
+                            <div th:each="plan : ${your.getValue().entrySet()}">
+                                <tr th:each="test : ${plan.getValue()}">
+                                    <td><a th:href="${your.getKey().getUrl()}" th:text="${your.getKey().getName()}"></a>
+                                    </td>
+                                    <td th:if="${plan.getKey() != null}"><a th:href="${plan.getKey().getUrl()}"
+                                                                            th:text="${plan.getKey().getName()}"></a>
+                                    </td>
+                                    <td th:unless="${plan.getKey() != null}">null</td>
+                                    <td th:text="${test.getName()}"></td>
+                                    <td th:text="${#dates.format(test.getCreatedOn(), 'dd.MM.yyyy')}"></td>
+                                </tr>
+                            </div>
+                        </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="false" aria-controls="collapseTwo">
+                        Удобно отформатированный вывод
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <div th:each="your : ${yourMap.entrySet()}" th:if="${!your.getValue().entrySet().isEmpty()}">
+                        <div class="row">
+                            <div>
+                                <h2 class="h2 border-bottom border-primary pl-3 pr-3">
+                                    Project name: <a th:href="${your.getKey().getUrl()}"
+                                                     th:text="${your.getKey().getName()}"></a>
+                                </h2>
+                            </div>
+                        </div>
+                        <div th:if="${!your.getValue().get(null).isEmpty()}">
+                            <div class="row ml-3">
+                                <div>
+                                    <h2 class="h2 border-bottom border-primary pl-3 pr-3">
+                                        Test without plan
+                                    </h2>
+                                </div>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="test : ${your.getValue().get(null)}">
+                                        <td th:text="${test.id}"></td>
+                                        <td><a th:href="${test.getUrl()}" th:text="${test.getName()}"></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div th:each="plan : ${your.getValue().entrySet()}"
+                             th:if="${plan.getKey() != null && !plan.getValue().isEmpty() }">
+                            <div class="row ml-3">
+                                <div>
+                                    <h2 class="h2 border-bottom border-primary pl-3 pr-3">
+                                        Plan name: <a th:href="${plan.getKey().getUrl()}"
+                                                      th:text="${plan.getKey().getName()}"></a>
+                                    </h2>
+                                </div>
+                                <table id="examplePlan" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="test : ${plan.getValue()}">
+                                        <td th:text="${test.getId()}"></td>
+                                        <td><a th:href="${test.getUrl()}" th:text="${test.getName()}"></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 4.5 JS -->
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.16.0/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.24/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.24/js/dataTables.bootstrap4.min.js}"></script>
+
+<script language="JavaScript">
+    $(document).ready(function () {
+        var table = $('#example').DataTable();
+
+        // $("#datepicker_from").datepicker({
+        //     showOn: "button",
+        //     buttonImageOnly: false,
+        //     "onSelect": function(date) {
+        //         minDateFilter = new Date(date).getTime();
+        //         table.fnDraw();
+        //     }
+        // }).keyup(function() {
+        //     minDateFilter = new Date(this.value).getTime();
+        //     table.fnDraw();
+        // });
+        //
+        // $("#datepicker_to").datepicker({
+        //     showOn: "button",
+        //     buttonImageOnly: false,
+        //     "onSelect": function(date) {
+        //         maxDateFilter = new Date(date).getTime();
+        //         table.fnDraw();
+        //     }
+        // }).keyup(function() {
+        //     maxDateFilter = new Date(this.value).getTime();
+        //     table.fnDraw();
+        // });
+
+    });
+
+    // // Date range filter
+    // minDateFilter = "";
+    // maxDateFilter = "";
+    //
+    // $.fn.dataTableExt.afnFiltering.push(
+    //     function(oSettings, aData, iDataIndex) {
+    //         if (typeof aData._date == 'undefined') {
+    //             aData._date = new Date(aData[0]).getTime();
+    //         }
+    //
+    //         if (minDateFilter && !isNaN(minDateFilter)) {
+    //             if (aData._date < minDateFilter) {
+    //                 return false;
+    //             }
+    //         }
+    //
+    //         if (maxDateFilter && !isNaN(maxDateFilter)) {
+    //             if (aData._date > maxDateFilter) {
+    //                 return false;
+    //             }
+    //         }
+    //
+    //         return true;
+    //     }
+    // );
+</script>
+
+</body>
+</html>

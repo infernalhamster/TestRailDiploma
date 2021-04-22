@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot Thymeleaf - Bootstrap WebJars</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css} "/>
+    <!-- Bootstrap 4.5 CSS-->
+    <link type="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link th:rel="stylesheet" th:href="@{/webjars/datatables/1.10.24/css/dataTables.bootstrap4.min.css}"/>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">Thymeleaf - Bootstrap Table</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-10 ml-auto mr-auto mt-5 mb-5 ">
+            <table id="example" class="table table-bordered table-hover dt-responsive nowrap">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Is Active</th>
+                    <th>Role</th>
+                    <th>Profile with runs</th>
+                    <th>Profile with cases</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.getId()}"></td>
+                    <td th:text="${user.getName()}"></td>
+                    <td th:text="${user.getEmail()}"></td>
+                    <td th:text="${user.isActive()}"></td>
+                    <td th:text="${user.getRole()}"></td>
+                    <td><a th:href="${'/user/runs/' + user.getId()}">Details</a></td>
+                    <td><a th:href="${'/user/cases/' + user.getId()}">Details</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 4.5 JS -->
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.16.0/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.24/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/webjars/datatables/1.10.24/js/dataTables.bootstrap4.min.js}"></script>
+
+<script language="JavaScript">
+    $(document).ready(function() {
+        var table = $('#example').DataTable();
+    } );
+</script>
+
+</body>
+</html>
