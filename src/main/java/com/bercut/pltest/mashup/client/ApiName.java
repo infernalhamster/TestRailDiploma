@@ -7,6 +7,7 @@ public enum ApiName {
     GET_PLAN("/get_plan"),
     GET_RUNS("/get_runs"),
     GET_CASES("/get_cases"),
+    GET_CASE_TYPES("/get_case_types"),
     GET_PROJECTS("/get_projects");
 
     private final String method;

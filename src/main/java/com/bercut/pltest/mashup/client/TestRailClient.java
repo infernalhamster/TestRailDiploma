@@ -1,6 +1,5 @@
 package com.bercut.pltest.mashup.client;
 
-import com.bercut.pltest.mashup.config.RestTemplateFactory;
 import lombok.Data;
 import lombok.NonNull;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -36,9 +35,7 @@ public class TestRailClient {
         String auth = Base64.encodeBase64String((username + ":" + password).getBytes());
         headers.add("Authorization", "Basic " + auth);
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        ResponseEntity<T> exchange =
-                new RestTemplateFactory().createTemplate()
-                        .exchange(urlApi + apiName, method, entity, clazz);
+        ResponseEntity<T> exchange = restTemplate.exchange(urlApi + apiName, method, entity, clazz);
         if (exchange.getStatusCodeValue() == 200) {
             return exchange.getBody();
         } else {

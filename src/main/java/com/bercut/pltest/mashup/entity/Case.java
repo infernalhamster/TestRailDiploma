@@ -16,6 +16,7 @@ import java.util.Date;
 public class Case {
     @JsonProperty("created_by")
     private int createdBy;
+    private String emailCreatedBy;
     @JsonProperty("created_on")
     private Timestamp createdOn;
     private String estimate;
@@ -25,15 +26,17 @@ public class Case {
     @JsonProperty("milestone_id")
     private int milestoneId;
     @JsonProperty("priority_id")
-    private String priorityId;
+    private int priorityId;
     private String refs;
     @JsonProperty("suite_id")
-    private String suiteId;
+    private int suiteId;
     private String title;
     @JsonProperty("type_id")
-    private String typeId;
+    private int typeId;
+    private String type;
     @JsonProperty("updated_by")
     private int updatedBy;
+    private String emailUpdatedBy;
     @JsonProperty("updated_on")
     private Timestamp updatedOn;
 
