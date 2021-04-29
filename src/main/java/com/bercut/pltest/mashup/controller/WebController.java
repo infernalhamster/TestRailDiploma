@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class WebController {
     private final TestRailClient client;
 
-    @GetMapping("/user")
+    @GetMapping(value = {"/", "/user", "/index"})
     public String users(Model model) {
         User[] user = client.sendGet(ApiName.GET_USERS, User[].class);
         model.addAttribute("users", user);
