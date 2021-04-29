@@ -41,40 +41,38 @@ public class MsTeamsClient {
         for (Project project : projects) {
             Case[] cases = testRailClient.sendGet(ApiName.GET_CASES, project.getId(), Case[].class);
             int end;
-            for (int j = 0; j < cases.length; j+=50) {
+            for (int j = 0; j < cases.length; j += 100) {
                 sections = new ArrayList<>();
                 notification = new Notification(sections);
-                List<Notification.Section.Facts> factsProject = new ArrayList<>();
-                factsProject.add(new Notification.Section.Facts("Url: ", project.getUrl()));
-//                sections.add(new Notification.Section("**" + project.getName() + "**", factsProject));
-                end  = j + 50;
-                if (j + 50 > cases.length){
+                sections.add(new Notification.Section("**" + project.getName() + "** "
+                        + "(url)[" + project.getUrl() + "]"));
+                end = j + 100;
+                if (end > cases.length) {
                     end = cases.length;
                 }
+                var str = new StringBuilder();
                 for (int i = j; i < end; i++) {
-                    var str = new StringBuilder();
-                    List<Notification.Section.Facts> facts = new ArrayList<>();
-                    facts.add(new Notification.Section.Facts("Type: ", caseTypesMap.get(cases[i].getTypeId())));
-                    facts.add(new Notification.Section.Facts("Creted by: ", userMap.get(cases[i].getCreatedBy())));
-                    facts.add(new Notification.Section.Facts("Title: ", cases[i].getTitle()));
-                    sections.add(
-                            new Notification.Section(str.append(" [")
-                                    .append(cases[i].getId())
-                                    .append("](https://test2021test.testrail.io/index.php?/cases/view/")
-                                    .append(cases[i].getId())
-                                    .append(")").toString(),
-                                    facts));
+                    str.append("[C")
+                            .append(cases[i].getId())
+                            .append("](https://test2021test.testrail.io/index.php?/cases/view/")
+                            .append(cases[i].getId())
+                            .append(") ")
+                            .append(cases[i].getTitle())
+                            .append(" **")
+                            .append(caseTypesMap.get(cases[i].getTypeId()))
+                            .append("** ")
+                            .append(userMap.get(cases[i].getCreatedBy()))
+                            .append("\n\n");
                 }
+                sections.add(new Notification.Section(str.toString()));
                 HttpEntity<?> entity = null;
                 try {
-                    String s = new ObjectMapper().writeValueAsString(notification);
-                    System.out.println(s);
-                    entity = new HttpEntity<>(s, headers);
+                    entity = new HttpEntity<>(new ObjectMapper().writeValueAsString(notification), headers);
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
                 ResponseEntity<String> exchange = restTemplate.postForEntity(webUrl, entity, String.class);
-                if (entity != null && !exchange.getBody().equals("1")) {
+                if (exchange.getBody() != null && !exchange.getBody().equals("1")) {
                     throw new IllegalArgumentException(exchange.toString());
                 }
             }

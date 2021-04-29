@@ -28,7 +28,8 @@ public class Notification {
     @AllArgsConstructor
     public static class Section {
         private String text;
-        private List<Facts> facts;
+        private final boolean wrap = true;
+//        private List<Facts> facts;
 
         @Data
         @JsonAutoDetect
