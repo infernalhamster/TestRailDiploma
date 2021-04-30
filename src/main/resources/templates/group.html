@@ -4,7 +4,6 @@
     <meta charset="UTF-8"/>
     <title>TestRail Show Cases</title>
 
-    <!--        <link rel="stylesheet" href="../static/css/datatables.css" th:href="@{/css/datatables.css}"/>-->
     <!-- Bootstrap 4.5 CSS-->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/datatables/1.10.24/css/dataTables.bootstrap4.min.css}"/>
@@ -45,7 +44,7 @@
 <div class="container mt-5">
     <form class="row g-3" action="#" th:action="@{/group}" th:object="${group}" method="post">
         <div class="col-12 mb-3">
-            <label for="inputProject" class="form-label">Web URL</label>
+            <label for="inputProject" class="form-label">Project name</label>
             <input type="text" class="form-control" id="inputProject" th:field="*{projects}">
         </div>
         <div class="col-12 mb-3">
