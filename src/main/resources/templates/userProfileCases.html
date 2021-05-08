@@ -102,7 +102,7 @@
                     <a th:href="${cases.getKey().getUrl()}"
                        th:text="${cases.getKey().getName()}"></a>
                 </td>
-                <td><a th:text="${case.getTitle()}" th:href="'https://test2021test.testrail.io/index.php?/cases/view/' + ${case.getId()}"></a></td>
+                <td><a th:text="${case.getTitle()}" th:href="'https://testdiploma.testrail.io/index.php?/cases/view/' + ${case.getId()}"></a></td>
                 <td>
                     <div th:if="${case.getCreatedBy() == id}">ME</div>
                     <div th:unless="${case.getCreatedBy() == id}"

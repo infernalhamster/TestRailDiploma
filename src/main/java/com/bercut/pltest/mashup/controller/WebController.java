@@ -110,10 +110,11 @@ public class WebController {
         Map<Integer, String> caseTypesMap =
                 Arrays.stream(caseTypes).collect(Collectors.toMap(CaseType::getId, CaseType::getName));
         List<User> users = Arrays.stream(client.sendGet(ApiName.GET_USERS, User[].class)).collect(Collectors.toList());
-        users = filterUserEmail(users, search.getEmails());
+        Map<Integer, String> collect = filterUserEmail(users, search.getEmails()).stream()
+                .collect(Collectors.toMap(User::getId, User::getEmail));
         Map<Integer, String> userMap = users.stream().collect(Collectors.toMap(User::getId, User::getEmail));
-        Map<Project, List<Case>> map = new HashMap<>(projects.size());
-        Map<Project, List<Case>> mapAllCases = new HashMap<>();
+        Map<Project, List<Case >> map = new HashMap<>(projects.size());
+        Map<Project, List<Case >> mapAllCases = new HashMap<>();
         if (search.getDateFrom() == null) {
             search.setDateFrom(new Date(0L));
         }
@@ -121,11 +122,12 @@ public class WebController {
             List<Case> cases = Arrays.stream(client.sendGet(ApiName.GET_CASES, project.getId(), Case[].class))
                     .filter(aCase -> {
                         if (
-                                ((!search.getIsModified() && userMap.containsKey(aCase.getCreatedBy()))
-                                || (search.getIsModified() && userMap.containsKey(aCase.getUpdatedBy()))
-                        )
-                                && aCase.getCreatedOn().getTime() > search.getDateFrom().getTime()
-                                && aCase.getCreatedOn().getTime() < search.getDateUntil().getTime()
+                                (
+                                        (!search.getIsModified() && collect.containsKey(aCase.getCreatedBy()))
+                                                || (search.getIsModified() && collect.containsKey(aCase.getUpdatedBy()))
+                                )
+                                        && aCase.getCreatedOn().getTime() >= search.getDateFrom().getTime()
+                                        && aCase.getCreatedOn().getTime() <= search.getModifiedDataUntil()
                         ) {
                             aCase.setType(caseTypesMap.get(aCase.getTypeId()));
                             aCase.setEmailCreatedBy(userMap.get(aCase.getCreatedBy()));

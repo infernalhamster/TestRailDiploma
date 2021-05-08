@@ -45,7 +45,7 @@ public class MsTeamsClient {
                 sections = new ArrayList<>();
                 notification = new Notification(sections);
                 sections.add(new Notification.Section("**" + project.getName() + "** "
-                        + "(url)[" + project.getUrl() + "]"));
+                        + "[url](" + project.getUrl() + ")"));
                 end = j + 100;
                 if (end > cases.length) {
                     end = cases.length;
@@ -54,7 +54,7 @@ public class MsTeamsClient {
                 for (int i = j; i < end; i++) {
                     str.append("[C")
                             .append(cases[i].getId())
-                            .append("](https://test2021test.testrail.io/index.php?/cases/view/")
+                            .append("](https://testDiploma.testrail.io/index.php?/cases/view/")
                             .append(cases[i].getId())
                             .append(") ")
                             .append(cases[i].getTitle())
