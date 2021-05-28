@@ -126,8 +126,8 @@ public class WebController {
                                         (!search.getIsModified() && collect.containsKey(aCase.getCreatedBy()))
                                                 || (search.getIsModified() && collect.containsKey(aCase.getUpdatedBy()))
                                 )
-                                && aCase.getCreatedOn().getTime() >= search.getDateFrom().getTime()
-                                && aCase.getCreatedOn().getTime() <= search.getModifiedDataUntil()
+                                        && aCase.getCreatedOn().getTime() >= search.getDateFrom().getTime()
+                                        && aCase.getCreatedOn().getTime() <= search.getModifiedDataUntil()
                         ) {
                             aCase.setType(caseTypesMap.get(aCase.getTypeId()));
                             aCase.setEmailCreatedBy(userMap.get(aCase.getCreatedBy()));
