@@ -16,6 +16,10 @@ public class Search {
     private boolean isModified;
     private boolean onlyAutomated;
 
+    public long getModifiedDataUntil() {
+        return dateUntil.getTime() + 86400000;
+    }
+
     public boolean getIsModified() {
         return isModified;
     }
