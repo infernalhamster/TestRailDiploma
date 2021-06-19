@@ -3,10 +3,12 @@ package com.bercut.pltest.mashup.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,4 +24,5 @@ public class Project {
     @JsonProperty("show_announcement")
     private boolean showAnnouncement;
     private String url;
+
 }

@@ -2,12 +2,13 @@ package com.bercut.pltest.mashup.entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @JsonAutoDetect
 public class Notification {
 
@@ -23,20 +24,28 @@ public class Notification {
         this.sections = sections;
     }
 
-    @Data
+    @Getter
+    @Setter
     @JsonAutoDetect
-    @AllArgsConstructor
     public static class Section {
         private String text;
         private final boolean wrap = true;
-//        private List<Facts> facts;
 
-        @Data
+        public Section(String text) {
+            this.text = text;
+        }
+
+        @Setter
+        @Getter
         @JsonAutoDetect
-        @AllArgsConstructor
         public static class Facts {
             private String name;
             private String value;
+
+            public Facts(String name, String value) {
+                this.name = name;
+                this.value = value;
+            }
         }
     }
 }

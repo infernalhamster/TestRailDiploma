@@ -1,11 +1,13 @@
 package com.bercut.pltest.mashup.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 public class Search {
     private String projects;
     private String emails;

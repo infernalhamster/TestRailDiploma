@@ -1,8 +1,10 @@
 package com.bercut.pltest.mashup.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Group {
     private String projects;
     private String webUrl;
